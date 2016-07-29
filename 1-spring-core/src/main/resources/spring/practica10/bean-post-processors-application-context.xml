@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="workerBean" init-method="init" destroy-method="destroy"
+		class="org.certificatic.spring.core.practica10.beanpostprocessors.bean.Worker">
+
+		<property name="name" value="Ilse Hernández" />
+		<property name="age" value="30" />
+
+	</bean>
+
+	<bean
+		class="org.certificatic.spring.core.practica10.beanpostprocessors.bpp.BeanPostProcessor1" />
+	<bean
+		class="org.certificatic.spring.core.practica10.beanpostprocessors.bpp.BeanPostProcessor2" />
+	<bean
+		class="org.certificatic.spring.core.practica10.beanpostprocessors.bpp.BeanPostProcessor3" />
+
+
+</beans>

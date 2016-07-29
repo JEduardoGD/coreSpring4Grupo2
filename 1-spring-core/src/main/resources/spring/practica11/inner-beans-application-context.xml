@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean class="org.certificatic.spring.core.practica11.innerbeans.bean.Person">
+		<property name="age" value="28" />
+		<property name="name">
+
+			<bean id="nameBean" class="java.lang.String">
+				<constructor-arg value="Ivan García" />
+			</bean>
+
+		</property>
+
+		<property name="address">
+
+			<bean
+				class="org.certificatic.spring.core.practica11.innerbeans.bean.Address">
+				<property name="externalNumber" value="123" />
+				<property name="internalNumber" value="56" />
+				<property name="neighbor">
+
+					<bean class="java.lang.String">
+						<constructor-arg>
+							<value>Campestre Churubusco</value>
+						</constructor-arg>
+					</bean>
+
+				</property>
+				<property name="street" ref="streetNameBean" />
+			</bean>
+
+		</property>
+	</bean>
+
+	<bean id="streetNameBean" class="java.lang.String">
+		<constructor-arg>
+			<value>Paseo de los Pirules</value>
+		</constructor-arg>
+	</bean>
+
+</beans>
