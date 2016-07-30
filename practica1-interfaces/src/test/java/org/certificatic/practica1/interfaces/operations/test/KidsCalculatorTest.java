@@ -2,6 +2,9 @@ package org.certificatic.practica1.interfaces.operations.test;
 
 import java.text.DecimalFormat;
 
+import org.certificatic.practica1.interfaces.operations.api.IKidsCalculator;
+import org.certificatic.practica1.interfaces.operations.api.impl.KidsCalculator;
+import org.junit.Assert;
 import org.junit.Test;
 
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +18,15 @@ public class KidsCalculatorTest {
 	public void kidsCalculatorTest(){
 		log.info("kidsCalculatorTest -------------------");
 		
-		// Implementar
+		IKidsCalculator kidsCal = new KidsCalculator();
+		
+		final double expectedValue = 6D;
+
+		kidsCal.set(5).add(5).add(5).add(-5).subtract(4);
+		
+		log.info("kidsCal.result(): {}", df.format(kidsCal.result()));
+
+		Assert.assertEquals(expectedValue, kidsCal.result(), 0.0001);
 	}
 	
 }
