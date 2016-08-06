@@ -5,24 +5,14 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd">
 
-	<!-- Define bean Car -->
+	<!-- Define bean clase Car -->
 
-	<!-- Define bean Engine -->
+	<!-- Define bean engine -->
 
-	<!-- Define bean WheelGroup -->
-	
+	<!-- Define bean wheelGroup -->
 
-	<util:list id="wheelList" list-class="java.util.ArrayList"
-		scope="prototype">
-		<ref bean="wheel" />
-		<ref bean="wheel" />
-		<ref bean="wheel" />
-		<ref bean="wheel" />
-	</util:list>
+	<!-- Define lista wheelList -->
 
-	<bean id="wheel"
-		class="org.certificatic.spring.core.practica13.autowire.bean.Wheel"
-		p:material="Caucho doble con spandex y PET" p:speedIndicator="250 75 Y"
-		p:rinSize="18" scope="prototype" />
+	<!-- Define bean wheel -->
 
 </beans>
