@@ -19,6 +19,32 @@ public class HolaMundoSpringTest1 {
 		String ruta = "spring/practica2/beans.xml";
 
 		// Implementar IoC con BeanFactory
+		BeanFactory factory = new XmlBeanFactory(new ClassPathResource(ruta));
+		
+		HolaMundo hm1 = (HolaMundo)factory.getBean("holaMundoBean");
+		HolaMundo hm2 = (HolaMundo)factory.getBean("holaMundoBean2");
+		
+		System.out.println(hm1);
+		System.out.println(hm2);
+		
+		System.out.println();
+		
+		
+		hm1.setMensaje("Hola Mundo !");
+		
+		System.out.println(hm1);
+		
+		HolaMundo hm11 = (HolaMundo)factory.getBean("holaMundoBean");
+		
+		System.out.println(hm11);
+		
+		hm11.setMensaje("Adios mundo cruel !");
+		
+		System.out.println(hm1);
+		System.out.println(hm2);
+		
+		Assert.assertSame(hm1, hm11);
+		Assert.assertNotSame(hm1, hm2);
 
 	}
 }

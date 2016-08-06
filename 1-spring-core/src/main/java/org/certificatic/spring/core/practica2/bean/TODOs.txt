@@ -1,5 +1,9 @@
 TODO 1.
-Definir beans en src\main\resources\spring\practica2\beans.xml
+Implementar TEST HolaMundoNoSpringTest
+
 
 TODO 2.
+Definir beans en src\main\resources\spring\practica2\beans.xml
+
+TODO 3.
 Implementar TESTs

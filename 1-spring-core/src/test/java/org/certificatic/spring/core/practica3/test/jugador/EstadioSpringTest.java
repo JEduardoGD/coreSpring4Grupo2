@@ -1,9 +1,9 @@
 package org.certificatic.spring.core.practica3.test.jugador;
 
-
+import org.certificatic.spring.core.practica3.jugador.JugadorFutbol;
+import org.certificatic.spring.core.practica3.jugador.api.IJugador;
 import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -18,6 +18,8 @@ public class EstadioSpringTest {
 	@BeforeClass
 	public static void beforeClass() {
 		// Instanciar ApplicationContext
+		applicationContext = new ClassPathXmlApplicationContext(
+				"spring/practica3/jugador-application-context.xml");
 	}
 
 	@Test
@@ -26,13 +28,40 @@ public class EstadioSpringTest {
 		log.info("estadioSpringTest1 -------------------");
 
 		// Implementar
+
+		JugadorFutbol jugador = applicationContext.getBean("jugadorFutbolBean",
+				JugadorFutbol.class);
+
+		Assert.assertNotNull(jugador);
+		Assert.assertNotNull(jugador.getPartido());
+		Assert.assertNotNull(jugador.getTorneo());
+		Assert.assertNotNull(jugador.getTorneo().getEvento());
+
+		jugador.saludar();
+
+		log.info("{}", jugador.getPartido());
+		log.info("{}", jugador.getTorneo());
+		log.info("{}", jugador.getTorneo().getEvento());
 	}
 
 	@Test
 	public void estadioSpringTest2() {
 		log.info("estadioSpringTest2 -------------------");
 
-		//Implementar
+		// Implementar
+		IJugador jugador = applicationContext.getBean("jugadorBean",
+				IJugador.class);
+
+		Assert.assertNotNull(jugador);
+		Assert.assertNotNull(jugador.getPartido());
+		Assert.assertNotNull(jugador.getTorneo());
+		Assert.assertNotNull(jugador.getTorneo().getEvento());
+
+		jugador.saludar();
+
+		log.info("{}", jugador.getPartido());
+		log.info("{}", jugador.getTorneo());
+		log.info("{}", jugador.getTorneo().getEvento());
 	}
 
 }
