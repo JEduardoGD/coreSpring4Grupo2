@@ -3,22 +3,8 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<bean id="connectionProdBean" init-method="connect"
-		destroy-method="disconnect"
-		class="org.certificatic.spring.core.practica9.beandefinitioninheritance.bean.ConnectionDataBase">
+	<!-- Define bean connectionProdBean -->
 
-		<property name="database" value="produccionDB001" />
-		<property name="user" value="pepitoRoot_Admin2" />
-		<property name="password" value="WEF#WDfsd.789871234EWR" />
-
-	</bean>
-
-	<bean id="connectionTestBean" parent="connectionProdBean"
-		class="org.certificatic.spring.core.practica9.beandefinitioninheritance.bean.ConnectionDataBase">
-
-		<property name="database" value="testDB" />
-		<property name="debugMode" value="true" />
-
-	</bean>
+	<!-- Define bean connectionTestBean -->
 
 </beans>

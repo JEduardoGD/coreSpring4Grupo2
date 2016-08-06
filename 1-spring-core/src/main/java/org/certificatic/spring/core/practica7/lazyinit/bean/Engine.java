@@ -9,6 +9,6 @@ public class Engine {
 	private int hp;
 
 	public Engine() {
-		System.out.println("Construction Engine()");
+		System.out.println("Constructing Engine()");
 	}
 }

@@ -1,12 +1,8 @@
 package org.certificatic.spring.core.practica8.test.factorymethod;
 
-import org.certificatic.spring.core.practica8.factorymethod.bean.Student;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.AbstractApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -17,8 +13,7 @@ public class FactoryMethodTest {
 
 	@Before
 	public void beforeClass() {
-		applicationContext = new ClassPathXmlApplicationContext(
-				"spring/practica8/factory-method-application-context.xml");
+		// Instanciar ApplicationContext
 	}
 
 	@Test
@@ -26,13 +21,7 @@ public class FactoryMethodTest {
 
 		log.info("factoryMethodTest -------------------");
 
-		Student student = applicationContext.getBean("student1", Student.class);
-
-		Assert.assertNotNull(student);
-
-		log.info("student: {}", student);
-
-		((AbstractApplicationContext) applicationContext).close();
+		// Implementar
 	}
 
 	@Test
@@ -40,13 +29,7 @@ public class FactoryMethodTest {
 
 		log.info("factoryMethodTest2 -------------------");
 
-		Student student = applicationContext.getBean("student2", Student.class);
-
-		Assert.assertNotNull(student);
-
-		log.info("student: {}", student);
-
-		((AbstractApplicationContext) applicationContext).close();
+		// Implementar
 	}
 
 }

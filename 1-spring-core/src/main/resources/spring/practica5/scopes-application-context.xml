@@ -4,36 +4,21 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 	<!-- singleton -->
-	<bean name="personaSingletonBean"
-		class="org.certificatic.spring.core.practica5.scopes.bean.Persona"
-		scope="singleton" />
-
+	<!-- Definir personaSingletonBean -->
+	
+	
 	<!-- prototype -->
-	<bean name="personaPrototypeBean"
-		class="org.certificatic.spring.core.practica5.scopes.bean.Persona"
-		scope="prototype">
-		<property name="nombre" value="Paco" />
-	</bean>
-
+	<!-- Definir personaPrototypeBean -->
+	
+	
 	<!-- custom scope -->
-	<bean id="customScopeBean"
-		class="org.certificatic.spring.core.practica5.scopes.custom.bean.CustomScope" />
+	<!-- Definir customScopeBean -->
+	
 
 	<!-- configurador -->
-	<bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">
-		<property name="scopes">
-			<map>
-				<entry key="customscope">
-					<ref bean="customScopeBean" />
-				</entry>
-			</map>
-		</property>
-	</bean>
+	<!-- Definir CustomScopeConfigurer -->
 
 	<!-- bean customscope -->
-	<bean id="personaCustomScopeBean"
-		class="org.certificatic.spring.core.practica5.scopes.bean.Persona"
-		scope="customscope">
-	</bean>
+	<!-- Definir personaCustomScopeBean -->
 
 </beans>
