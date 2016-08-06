@@ -3,26 +3,10 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<bean id="connectionBeanTemplate" init-method="connect"
-		destroy-method="disconnect" abstract="true">
-		<property name="user" value="pepitoRoot_Admin2" />
-		<property name="password" value="WEF#WDfsd.789871234EWR" />
-		<property name="debugMode" value="false" />
-	</bean>
+	<!-- Define connectionBeanTemplate -->
 
-	<bean id="connectionProdBean" parent="connectionBeanTemplate"
-		class="org.certificatic.spring.core.practica9.beandefinitioninheritance.bean.ConnectionDataBase">
+	<!-- Define connectionProdBean -->
 
-		<property name="database" value="produccionDB001" />
-
-	</bean>
-
-	<bean id="connectionTestBean" parent="connectionBeanTemplate"
-		class="org.certificatic.spring.core.practica9.beandefinitioninheritance.bean.ConnectionDataBase">
-
-		<property name="database" value="testDB" />
-		<property name="debugMode" value="true" />
-
-	</bean>
+	<!-- Define connectionTestBean -->
 
 </beans>
