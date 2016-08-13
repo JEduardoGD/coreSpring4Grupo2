@@ -4,9 +4,12 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 	<!-- Define bean clase Car -->
+	<bean class="org.certificatic.spring.core.practica7.lazyinit.bean.Car"></bean>
 
 	<!-- Define bean engine -->
+	<bean class="org.certificatic.spring.core.practica7.lazyinit.bean.Engine"></bean>
 
 	<!-- Define bean wheel -->
+	<bean class="org.certificatic.spring.core.practica7.lazyinit.bean.Wheel"></bean>
 
 </beans>
