@@ -1,11 +1,13 @@
 package org.certificatic.spring.core.practica8.factorymethod.bean;
 
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Setter;
 
 @Data
 public class Student {
-	private String name;
-	private Subject subject;
+	private @Setter(AccessLevel.PRIVATE) String name;
+	private @Setter(AccessLevel.PRIVATE) Subject subject;
 
 	private Student() {
 	}
@@ -16,7 +18,7 @@ public class Student {
 		a.setSubject(new Subject());
 		a.getSubject().setName(materia);
 		a.getSubject().setTeacher(new Teacher());
-		a.getSubject().getTeacher().setName("Ivan");
+		a.getSubject().getTeacher().setName("Julia");
 		return a;
 	}
 
