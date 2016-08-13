@@ -55,7 +55,7 @@ public class InnerBeansTest {
 
 		log.info("getNameBeanTest -------------------");
 
-		String nameBean = applicationContext.getBean("nameBean",
+		String nameBean = applicationContext.getBean("personNameBean",
 				String.class);
 
 		Assert.fail("Should have to fail at this line");

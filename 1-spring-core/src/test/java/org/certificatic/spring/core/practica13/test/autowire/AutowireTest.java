@@ -2,6 +2,7 @@ package org.certificatic.spring.core.practica13.test.autowire;
 
 import org.certificatic.spring.core.practica13.autowire.bean.Car;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -29,6 +30,7 @@ public class AutowireTest {
 	}
 
 	@Test
+	@Ignore
 	public void autowireByTypeTest() {
 
 		log.info("autowireByTypeTest -------------------");
@@ -46,6 +48,7 @@ public class AutowireTest {
 	}
 
 	@Test
+	@Ignore
 	public void autowireConstructorTest() {
 
 		log.info("autowireConstructorTest -------------------");
