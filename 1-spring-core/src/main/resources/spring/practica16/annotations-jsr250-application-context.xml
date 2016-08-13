@@ -4,21 +4,13 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-	<context:annotation-config />
+	<!-- Habilita configuración por anotaciones -->
 
-	<bean class="org.certificatic.spring.core.practica16.jsr250.bean.Student" />
+	<!-- Define bean Student -->
 
-	<bean id="mathematics"
-		class="org.certificatic.spring.core.practica16.jsr250.bean.Subject">
-		<property name="name" value="Mathematics" />
-		<property name="credits" value="6" />
-	</bean>
+	<!-- Define bean Subject (mathematics) -->
 
-	<bean id="subject"
-		class="org.certificatic.spring.core.practica16.jsr250.bean.Subject">
-		<property name="name" value="Algebra" />
-		<property name="credits" value="6" />
-	</bean>
+	<!-- Define bean Subject (subject) -->
 
 	<bean id="name" class="java.lang.String">
 		<constructor-arg>
@@ -31,6 +23,5 @@
 			<value>2008630474</value>
 		</constructor-arg>
 	</bean>
-
 
 </beans>

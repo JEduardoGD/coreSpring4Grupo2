@@ -10,6 +10,10 @@
 
 	<!-- Define bean Journalist -->
 
+	<!-- Define bean NoteBook -->
+
+	<!-- Define bean Pen -->
+
 	<bean class="java.lang.String">
 		<constructor-arg>
 			<value>Lara Croft</value>
@@ -20,19 +24,6 @@
 		<constructor-arg>
 			<value>32</value>
 		</constructor-arg>
-	</bean>
-
-	<bean
-		class="org.certificatic.spring.core.practica15.autowired.setter.bean.NoteBook">
-		<property name="brand" value="Magic notebook" />
-		<property name="size" value="A4" />
-	</bean>
-
-	<bean
-		class="org.certificatic.spring.core.practica15.autowired.setter.bean.Pen">
-		<property name="inkColor">
-			<util:constant static-field="java.awt.Color.YELLOW" />
-		</property>
 	</bean>
 
 </beans>
