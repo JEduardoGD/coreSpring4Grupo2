@@ -2,11 +2,11 @@ package org.certificatic.spring.core.practica14.numericalConverter.bean;
 
 public class Numerical {
 
-	private final String[] UNITS = { "", "un", "dos", "tres", "cuatro",
-			"cinco", "seis", "siete", "ocho", "nueve" };
+	private final String[] UNITS = { "", "un", "dos", "tres", "cuatro", "cinco",
+			"seis", "siete", "ocho", "nueve" };
 
 	private final String[] DOZENS = { "diez", "once", "doce", "trece",
-			"cuatorce", "quince", "dieciseis", "diecisiete", "dieciocho",
+			"catorce", "quince", "dieciseis", "diecisiete", "dieciocho",
 			"diecinueve", "veinte", "treina", "cuarenta", "cincuenta",
 			"sesenta", "setenta", "ochenta", "noventa" };
 
