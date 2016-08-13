@@ -11,18 +11,22 @@ public class Journalist {
 	private NoteBook notebook;
 	private Pen pen;
 
+	// Inyectar
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	// Inyectar
 	public void setAge(Integer age) {
 		this.age = age;
 	}
 
+	// Inyectar
 	public void setNotebook(NoteBook notebook) {
 		this.notebook = notebook;
 	}
 
+	// Inyectar
 	public void setAge(Pen pen) {
 		this.pen = pen;
 	}

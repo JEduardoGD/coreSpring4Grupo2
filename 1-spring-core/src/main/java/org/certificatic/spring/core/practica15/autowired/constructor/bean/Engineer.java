@@ -13,6 +13,7 @@ public class Engineer {
 	private @Setter(AccessLevel.NONE) Laptop notebook;
 	private @Setter(AccessLevel.NONE) Stylus pen;
 
+	// Inyectar
 	public Engineer(String name, Integer age, Laptop notebook, Stylus pen) {
 		super();
 		this.name = name;

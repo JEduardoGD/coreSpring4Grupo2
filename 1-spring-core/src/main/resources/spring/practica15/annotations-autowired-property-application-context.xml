@@ -8,31 +8,6 @@
 
 	<!-- Habilita configuración por anotaciones -->
 
-	<!-- Define bean Reporter -->
-
-	<bean class="java.lang.String">
-		<constructor-arg>
-			<value>Lara Croft</value>
-		</constructor-arg>
-	</bean>
-
-	<bean class="java.lang.Integer">
-		<constructor-arg>
-			<value>32</value>
-		</constructor-arg>
-	</bean>
-
-	<bean
-		class="org.certificatic.spring.core.practica15.autowired.properties.bean.Booklet">
-		<property name="brand" value="Little booklet" />
-		<property name="size" value="half letter" />
-	</bean>
-
-	<bean
-		class="org.certificatic.spring.core.practica15.autowired.properties.bean.Pencil">
-		<property name="inkColor">
-			<util:constant static-field="java.awt.Color.YELLOW" />
-		</property>
-	</bean>
+	<!-- Define beans requeridos -->
 
 </beans>
