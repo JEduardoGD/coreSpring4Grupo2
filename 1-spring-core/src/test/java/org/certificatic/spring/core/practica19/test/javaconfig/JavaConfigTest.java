@@ -16,8 +16,11 @@ import org.springframework.context.ApplicationContext;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-// Implementar spring-test
+// Implementar run with spring-test
+// cargar context configuration
 public class JavaConfigTest {
+
+	// Inyectar todas las dependencias
 
 	private ApplicationContext applicationContext;
 
@@ -56,9 +59,8 @@ public class JavaConfigTest {
 		double c = -9;
 
 		QuadraticEquationResult quadraticEquationResultExpected = QuadraticEquationResult
-				.builder()
-				.x1(new Complex(1.4305))
-				.x2(new Complex(-2.0972)).build();
+				.builder().x1(new Complex(1.4305)).x2(new Complex(-2.0972))
+				.build();
 
 		String equation = quadraticService.quadraticEquationToString(a, b, c);
 
@@ -85,8 +87,7 @@ public class JavaConfigTest {
 		double c = 10;
 
 		QuadraticEquationResult quadraticEquationResultExpected = QuadraticEquationResult
-				.builder()
-				.x1(new Complex(-0.75, 1.0508))
+				.builder().x1(new Complex(-0.75, 1.0508))
 				.x2(new Complex(-0.75, -1.0508)).build();
 
 		String equation = quadraticService.quadraticEquationToString(a, b, c);
@@ -108,8 +109,7 @@ public class JavaConfigTest {
 		log.info("getBeanJavaConfigTest -------------------");
 
 		IQuadraticEquationService otherQuadraticService = applicationContext
-				.getBean("quadraticService",
-						IQuadraticEquationService.class);
+				.getBean("quadraticService", IQuadraticEquationService.class);
 
 		Assert.assertEquals(quadraticService, otherQuadraticService);
 		Assert.assertSame(quadraticService, otherQuadraticService);
@@ -136,8 +136,7 @@ public class JavaConfigTest {
 		log.info("getBeanByQualifierJavaConfigTest2 -------------------");
 
 		IQuadraticEquationService otherQuadraticService = applicationContext
-				.getBean("quadraticService2",
-						IQuadraticEquationService.class);
+				.getBean("quadraticService2", IQuadraticEquationService.class);
 
 		Assert.assertEquals(otherQuadraticService, quadraticService2);
 		Assert.assertEquals(otherQuadraticService, quadraticService2x);
@@ -181,8 +180,7 @@ public class JavaConfigTest {
 				"getBeanByQualifierPrototypeJavaConfigTest -------------------");
 
 		IQuadraticEquationService otherQuadraticService = applicationContext
-				.getBean("quadraticService3",
-						IQuadraticEquationService.class);
+				.getBean("quadraticService3", IQuadraticEquationService.class);
 
 		Assert.assertNotEquals(otherQuadraticService, quadraticService3);
 		Assert.assertNotSame(otherQuadraticService, quadraticService3);
