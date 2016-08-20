@@ -7,9 +7,11 @@ import org.junit.Test;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-// Implementar spring-test
+// Implementar run with spring-test
+// cargar context configuration
 public class Jsr330AnnotationTest {
 
+	// Inyectar
 	private Corporation corporation;
 
 	public void beforeClass() {
