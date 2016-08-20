@@ -33,13 +33,13 @@ public class QuadraticEquationServiceImpl implements IQuadraticEquationService {
 		} else {
 			sqrtOperation = Math.sqrt(-1 * BQuadraticMinusFourAC);
 
-			return QuadraticEquationResult.builder()
-					.x1(new Complex(Double
-							.valueOf(decimalFormater.format(minusB / twoA)),
-							Double.valueOf(decimalFormater
-									.format(sqrtOperation / twoA))))
-					.x2(new Complex(Double
-							.valueOf(decimalFormater.format(minusB / twoA)),
+			return QuadraticEquationResult.builder().x1(new Complex(
+					Double.valueOf(decimalFormater.format(minusB / twoA)),
+					Double.valueOf(
+							decimalFormater.format(sqrtOperation / twoA))))
+					.x2(new Complex(
+							Double.valueOf(
+									decimalFormater.format(minusB / twoA)),
 							Double.valueOf(decimalFormater
 									.format(-sqrtOperation / twoA))))
 					.build();
