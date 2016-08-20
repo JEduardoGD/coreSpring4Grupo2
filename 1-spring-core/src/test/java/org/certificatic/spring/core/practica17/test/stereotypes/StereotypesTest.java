@@ -25,11 +25,13 @@ public class StereotypesTest {
 
 		log.info("restControllerTest -------------------");
 
-		IRestControllerClass restController = applicationContext.getBean(IRestControllerClass.class);
+		IRestControllerClass restController = applicationContext
+				.getBean(IRestControllerClass.class);
 
 		String name = "My REST Controller Implementation";
 
 		Assert.assertNotNull(restController);
+
 		Assert.assertEquals(name, restController.getRestControllerClassName());
 
 		log.info("restController: {}", restController);
