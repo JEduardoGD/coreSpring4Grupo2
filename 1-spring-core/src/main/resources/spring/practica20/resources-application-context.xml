@@ -4,13 +4,24 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 
-	<!-- Habilitar component scan -->
+	<!-- TODO 4. -->
+	<!-- Definir bean Resources -->
 
-	<!-- Define bean Resources -->
-	
-	
-	<!-- Después: define PropertyPlaceholderConfigurer -->
-	
-	<!-- Después: configure un context:property-placeholder -->
+
+
+	<!-- TODO 7. -->
+	<!-- Habilitar <context:component-scan /> -->
+
+
+
+	<!-- TODO 10. -->
+	<!-- Definir PropertyPlaceholderConfigurer -->
+
+
+
+	<!-- TODO 12 - Bonus. -->
+	<!-- Definir <context:property-placeholder/> y <util:properties /> -->
+
+
 
 </beans>

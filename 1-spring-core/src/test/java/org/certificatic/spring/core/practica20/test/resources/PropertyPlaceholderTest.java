@@ -1,43 +1,39 @@
 package org.certificatic.spring.core.practica20.test.resources;
 
-import javax.inject.Inject;
-
 import org.certificatic.spring.core.practica20.resources.bean.FavouriteRockBands;
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(
-		locations = "classpath:/spring/practica20/resources-application-context.xml")
+// Implementar run with spring-test
+// cargar context configuration
 public class PropertyPlaceholderTest {
 
-	@Inject
+	public static final String location = "classpath:/spring/practica20/resources-application-context.xml";
+
+	// Inyectar
 	private FavouriteRockBands rockbands;
 
-	// Injectar property service.name
+	// Inyectar property service.name
 	private String serviceName;
 
-	// Injectar property service.description
+	// Inyectar property service.description
 	private String serviceDescription;
 
-	// Injectar property datasource.name
+	// Inyectar property datasource.name
 	@Value("${datasource.name}")
 	private String datasourceName;
 
-	// Injectar property datasource.description
+	// Inyectar property datasource.description
 	private String datasourceDescription;
 
-	// Injectar property app.name
+	// Inyectar property app.name
 	private String appName;
 
-	// Injectar property app.description
+	// Inyectar property app.description
 	private String appDescription;
 
 	@Test
