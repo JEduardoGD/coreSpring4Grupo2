@@ -20,5 +20,4 @@ public class QuadraticEquationResult {
 
 		return sb.toString();
 	}
-
 }
