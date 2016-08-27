@@ -46,7 +46,6 @@ public class SpELTest_1 {
 		log.info("guessNumber.getRandomNumber(): {}", guessNumber.getRandomNumber());
 		log.info("magician.getInitialNumber(): {}", magician.getInitialNumber());
 		log.info("properties: {}", properties);
-
 	}
 
 }
