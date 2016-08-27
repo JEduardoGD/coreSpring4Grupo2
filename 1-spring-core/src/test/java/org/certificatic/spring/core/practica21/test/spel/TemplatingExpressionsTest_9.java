@@ -28,7 +28,7 @@ public class TemplatingExpressionsTest_9 {
 		applicationContext = new AnnotationConfigApplicationContext(ApplicationConfig.class);
 
 		springContext = new StandardEvaluationContext();
-		((StandardEvaluationContext) springContext).setBeanResolver(applicationContext.getBean(MyBeanResolver.class));
+		springContext.setBeanResolver(applicationContext.getBean(MyBeanResolver.class));
 	}
 
 	@Test
@@ -38,15 +38,31 @@ public class TemplatingExpressionsTest_9 {
 
 		springContext.setVariable("name", "Ivan García");
 
-		String greeting = spelParser
-				.parseExpression("Hi #{ #name +' '+'you''re' } awesome!", new TemplateParserContext())
-				.getValue(springContext,
-						String.class);
+		String greeting = spelParser.parseExpression("Hi #{ #name +' '+'you''re' } awesome!", new TemplateParserContext())
+				.getValue(springContext,String.class); // sólo analiza
 
 		Assert.assertNotNull(greeting);
+		
 		Assert.assertEquals("Hi Ivan García you're awesome!", greeting);
+		
 		log.info("greeting: {}", greeting);
+	}
+	
+	@Test
+	public void templatingExpressionsTest2() {
 
+		log.info("templatingExpressionsTest2 -------------------");
+
+		springContext.setVariable("name", "Ivan García");
+
+		String greeting = spelParser.parseExpression("Hi %[[ #name +' '+'you''re' ]] awesome!", new TemplateParserContext("%[[","]]"))
+				.getValue(springContext,String.class); // sólo analiza
+
+		Assert.assertNotNull(greeting);
+		
+		Assert.assertEquals("Hi Ivan García you're awesome!", greeting);
+		
+		log.info("greeting: {}", greeting);
 	}
 
 }

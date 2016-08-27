@@ -3,8 +3,9 @@ package org.certificatic.spring.core.practica20.resources.bean;
 import lombok.Data;
 
 @Data
-// Definir bean
+// Definir bean componente
 // Implementar ResourceLoaderAware
-// Injectar bean Resources
 public class BeanResourceLoaderAware {
+
+	// Inyectar dependencia Resources
 }
