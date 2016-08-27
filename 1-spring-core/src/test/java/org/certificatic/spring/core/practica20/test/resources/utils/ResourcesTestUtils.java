@@ -25,7 +25,8 @@ import lombok.extern.slf4j.Slf4j;
 public class ResourcesTestUtils {
 
 	private static IInputStreamResourceReader isrr = (ir) -> {
-		try (BufferedReader buffer = new BufferedReader(new InputStreamReader(ir))) {
+		try (BufferedReader buffer = new BufferedReader(
+				new InputStreamReader(ir))) {
 			return buffer.lines().collect(Collectors.joining("\n"));
 		}
 	};
@@ -48,8 +49,8 @@ public class ResourcesTestUtils {
 	@SneakyThrows
 	public static void loadPropertiesFile(Resource resource) {
 
-		String expectedText = "certificatic.curso=Spring Framework 4\n" +
-				"certificatic.instructor=Ivan García";
+		String expectedText = "certificatic.curso=Spring Framework 4\n"
+				+ "certificatic.instructor=Ivan García";
 
 		String readText = isrr.read(resource.getInputStream());
 
@@ -60,9 +61,15 @@ public class ResourcesTestUtils {
 		Properties properties = new Properties();
 		properties.load(resource.getInputStream());
 
-		Assert.assertEquals("Ivan García", properties.getProperty("certificatic.instructor"));
+		Assert.assertEquals("Ivan García",
+				properties.getProperty("certificatic.instructor"));
+		Assert.assertEquals("Spring Framework 4",
+				properties.getProperty("certificatic.curso"));
 
-		log.info("certificatic.instructor: {}", properties.getProperty("certificatic.instructor"));
+		log.info("certificatic.instructor: {}",
+				properties.getProperty("certificatic.instructor"));
+		log.info("certificatic.curso: {}",
+				properties.getProperty("certificatic.curso"));
 	}
 
 	@SneakyThrows
@@ -71,7 +78,7 @@ public class ResourcesTestUtils {
 
 		String readText = isrr.read(resource.getInputStream());
 
-		log.info("URLFile: {}", readText);
+		// log.info("URLFile: {}", readText);
 
 		Document doc = Jsoup.parse(readText);
 
@@ -85,8 +92,8 @@ public class ResourcesTestUtils {
 	public static void loadAndCopyImage(Resource resource, String copyPath) {
 		String expectedText = "logo.png";
 
-		FileCopyUtils.copy(resource.getInputStream(),
-				new FileOutputStream(new File(copyPath, resource.getFilename())));
+		FileCopyUtils.copy(resource.getInputStream(), new FileOutputStream(
+				new File(copyPath, resource.getFilename())));
 
 		Path path = Paths.get(copyPath + resource.getFilename());
 
