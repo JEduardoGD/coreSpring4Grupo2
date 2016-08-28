@@ -4,17 +4,17 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 
-	<!-- TODO 3. -->
+	<!-- TODO 2. -->
 	<!-- Define el valor de randomNumber con SpEL -->
 	<bean id="gessNumberBean"
 		class="org.certificatic.spring.core.practica21.spel.bean.GuessNumber">
-		<property name="randomNumber" value="" />
+		<property name="randomNumber" value="#{ T(java.lang.Math).random() * 100.0 }" />
 	</bean>
 
-	<!-- TODO 3. -->
+	<!-- TODO 2. -->
 	<!-- Define el valor de initialNumber igual a randomNumber del bean GuessNumber -->
 	<bean class="org.certificatic.spring.core.practica21.spel.bean.Magician">
-		<property name="initialNumber" value="" />
+		<property name="initialNumber" value="#{ gessNumberBean.randomNumber }" />
 	</bean>
 
 

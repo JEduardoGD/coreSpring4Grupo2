@@ -20,7 +20,11 @@ public class LiteralExpressionsTest_2 {
 
 		Expression spelExpression = spelParser.parseExpression("'Ivan García'");
 
-		String stringExpression = null; // obtener valor de la expresion
+		String stringExpression = spelExpression.getValue(String.class); // obtener
+																			// valor
+																			// de
+																			// la
+																			// expresion
 
 		Assert.assertEquals("Ivan García", stringExpression);
 
@@ -34,8 +38,9 @@ public class LiteralExpressionsTest_2 {
 
 		ExpressionParser spelParser = new SpelExpressionParser();
 
-		double doubleValue = 0.0; // definir y obtener el valor de la expresion
-									// "3.1416E+10"
+		double doubleValue = spelParser.parseExpression("3.1416E+10")
+				.getValue(Double.class); // definir y obtener el valor de la
+											// expresion "3.1416E+10"
 
 		Assert.assertEquals(3.1416E10, doubleValue, 0.0001);
 
