@@ -34,46 +34,60 @@ public class MethodExpressionsTest_4 {
 
 		log.info("methodExpressionsTest -------------------");
 
-		// definir expresión substring que obtenga el valor esperado de Tesla
-		String teslaFirstName = (String) spelParser.parseExpression(null).getValue(teslaContext);
-		
+		// definir expresión substring que obtenga el valor esperado de 'Nikola'
+		// de 'Nikola Tesla'
+		String teslaFirstName = (String) spelParser
+				.parseExpression("name.substring(0,6)").getValue(teslaContext);
+
 		Assert.assertEquals("Nikola", teslaFirstName);
-		
+
 		log.info("teslaFirstName: {}", teslaFirstName);
 
 		// -------------------------------------
-		
-		// definir expresión que verifique si el 'Rudolf Carl Virchow' es miebro de la sociedad IEEE
-		boolean isMemberRudolfCarlVirchow = (boolean) spelParser.parseExpression(null).getValue(societyContext);
-		
+
+		// definir expresión que verifique si el 'Rudolf Carl Virchow' es miebro
+		// de la sociedad IEEE
+		boolean isMemberRudolfCarlVirchow = (boolean) spelParser
+				.parseExpression("isMember('Rudolf Carl Virchow')")
+				.getValue(societyContext);
+
 		Assert.assertFalse(isMemberRudolfCarlVirchow);
-		
+
 		log.info("isMember RudolfCarlVirchow: {}", isMemberRudolfCarlVirchow);
 
 		// -------------------------------------
 
-		// definir expresión que verifique si el 'Charles Babbage' es miebro de la sociedad IEEE
-		boolean isMemberCharlesBabbage = (boolean) spelParser.parseExpression(null).getValue(societyContext);
-		
+		// definir expresión que verifique si el 'Charles Babbage' es miebro de
+		// la sociedad IEEE
+		boolean isMemberCharlesBabbage = (boolean) spelParser
+				.parseExpression("isMember('Charles Babbage')")
+				.getValue(societyContext);
+
 		Assert.assertTrue(isMemberCharlesBabbage);
-		
+
 		log.info("isMember CharlesBabbage: {}", isMemberCharlesBabbage);
 
 		// -------------------------------------
 
 		// method with if then else.
 		String charlesBabage = "Charles Babbage";
-		
-		// definir la variable "inventor" con el nombre de "Charles Babbage" y agregarla al contexto sociedad IEEE
-		
+
+		// definir la variable "inventor" con el nombre de "Charles Babbage" y
+		// agregarla al contexto sociedad IEEE
+
+		societyContext.setVariable("inventor", "Charles Babbage");
+
 		// analizar
 		String isMemberCharlesBabbageString = spelParser
-				.parseExpression("isMember(#inventor) ? #inventor + ' is member !' : #inventor + ' isn''t member.'")
+				.parseExpression(
+						"isMember(#inventor) ? #inventor + ' is member !' : #inventor + ' isn''t member.'")
 				.getValue(societyContext, String.class);
-		
-		Assert.assertEquals(charlesBabage + " is member !", isMemberCharlesBabbageString);
-		
-		log.info("isMember CharlesBabbageString: {}", isMemberCharlesBabbageString);
+
+		Assert.assertEquals(charlesBabage + " is member !",
+				isMemberCharlesBabbageString);
+
+		log.info("isMember CharlesBabbageString: {}",
+				isMemberCharlesBabbageString);
 
 	}
 }

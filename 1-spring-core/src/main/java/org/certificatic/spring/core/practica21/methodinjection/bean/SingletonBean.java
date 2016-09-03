@@ -6,19 +6,21 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class SingletonBean {
+public abstract class SingletonBean {
 
 	private @Setter Integer iterations;
 
 	// Inyecta un prototype IProcessor en este bean singleton (¿¿¿¿como????)
-	private IProcessor processor;
+	// private IProcessor processor;
 
 	public String process(String data) {
 		log.info("SingletonBean id [{}]: sending to process data ...",
 				super.hashCode());
 
-		return processor.processData(data, iterations);
+		return getProcessor().processData(data, iterations);
 	}
+
+	public abstract IProcessor getProcessor();
 
 }
 // Define la estructura para inyectar métodos en éste bean

@@ -33,12 +33,17 @@ public class VariablesFunctionsBeanReferencesExpressionsTest_7 {
 
 	@BeforeClass
 	public static void setUp() {
-		applicationContext = new AnnotationConfigApplicationContext(ApplicationConfig.class);
+		applicationContext = new AnnotationConfigApplicationContext(
+				ApplicationConfig.class);
 
 		springContext = new StandardEvaluationContext();
-		
-		// asignar al 'springContext' el bean resolver 'MyBeanResolver' que se encuentra en el application context
-		springContext.setBeanResolver(null);
+
+		// asignar al 'springContext' el bean resolver 'MyBeanResolver' que se
+		// encuentra en el application context
+		MyBeanResolver myBeanResolver = applicationContext
+				.getBean(MyBeanResolver.class);
+
+		springContext.setBeanResolver(myBeanResolver);
 	}
 
 	@Test
@@ -48,25 +53,31 @@ public class VariablesFunctionsBeanReferencesExpressionsTest_7 {
 
 		Magician magician = applicationContext.getBean(Magician.class);
 
-		springContext.setVariable("magicNumber", magician.getInitialNumber()); // sólo analizar
+		springContext.setVariable("magicNumber", magician.getInitialNumber()); // sólo
+																				// analizar
 
-		// defnir y obtener el valor de una expresión que acceda al bean gessNumberBean definido en el aplication-context.xml
+		// defnir y obtener el valor de una expresión que acceda al bean
+		// gessNumberBean definido en el aplication-context.xml
 		// y recupere el valor de la propiedad randomNumber
-		Integer randomNumber = spelParser.parseExpression(null).getValue(springContext, Integer.class);
+		Integer randomNumber = spelParser
+				.parseExpression("@gessNumberBean.randomNumber")
+				.getValue(springContext, Integer.class);
 
-		springContext.setVariable("randomNumber", randomNumber); // sólo analizar
+		springContext.setVariable("randomNumber", randomNumber); // sólo
+																	// analizar
 
 		// -------------------------------------
 
-		Boolean isCorrectNumber = spelParser.parseExpression("#randomNumber == #magicNumber").getValue(springContext,
-				Boolean.class); // sólo analizar
-		
+		Boolean isCorrectNumber = spelParser
+				.parseExpression("#randomNumber == #magicNumber")
+				.getValue(springContext, Boolean.class); // sólo analizar
+
 		Assert.assertNotNull(isCorrectNumber);
-		
+
 		log.info("isCorrectNumber: {}", isCorrectNumber);
 
 		log.info("magician.initialNumber: {}", magician.getInitialNumber());
-		
+
 		log.info("gessNumberBean.randomNumber: {}", randomNumber);
 	}
 
@@ -81,21 +92,27 @@ public class VariablesFunctionsBeanReferencesExpressionsTest_7 {
 		springContext.setVariable("b", 4);
 		springContext.setVariable("c", -10);
 
-		// registra una función llamada 'chicharronera' que invoque al método 'calculate' de la clase Chicharronera
-		springContext.registerFunction(null, null);
+		// registra una función llamada 'chicharronera' que invoque al método
+		// 'calculate' de la clase Chicharronera
+		springContext.registerFunction("chicharronera",
+				Chicharronera.class.getDeclaredMethod("calculate", new Class[] {
+						double.class, double.class, double.class }));
 
-		QuadraticEquationResult expectedResult = QuadraticEquationResult.builder().x1(new Complex(1.0697, 0.0))
+		QuadraticEquationResult expectedResult = QuadraticEquationResult
+				.builder().x1(new Complex(1.0697, 0.0))
 				.x2(new Complex(-1.8697, 0.0)).build(); // sólo analiza
 
-		// definir y obtener el valor de la expresión que invoque a la función 'chicharronera' tomando como argumentos
+		// definir y obtener el valor de la expresión que invoque a la función
+		// 'chicharronera' tomando como argumentos
 		// las variables 'a', 'b' y 'c'
-		QuadraticEquationResult quadraticEquationResult = spelParser.parseExpression(null)
+		QuadraticEquationResult quadraticEquationResult = spelParser
+				.parseExpression("#chicharronera(#a,#b,#c)")
 				.getValue(springContext, QuadraticEquationResult.class);
 
 		Assert.assertNotNull(quadraticEquationResult);
-		
+
 		Assert.assertEquals(expectedResult, quadraticEquationResult);
-		
+
 		log.info("quadraticEquationResult: {}", quadraticEquationResult);
 	}
 
@@ -105,38 +122,40 @@ public class VariablesFunctionsBeanReferencesExpressionsTest_7 {
 
 		log.info("beanReferencesExpressionsTest -------------------");
 
-		GuessNumber guessNumber = spelParser.parseExpression("@gessNumberBean").getValue(springContext,
-				GuessNumber.class); //sólo analiza
-		
+		GuessNumber guessNumber = spelParser.parseExpression("@gessNumberBean")
+				.getValue(springContext, GuessNumber.class); // sólo analiza
+
 		Assert.assertNotNull(guessNumber);
-		
+
 		log.info("guessNumber: {}", guessNumber);
 
 		// -------------------------------------
 
-		Inventor tesla = spelParser.parseExpression("@teslaBean").getValue(springContext,
-				Inventor.class); //sólo analiza
-		
+		Inventor tesla = spelParser.parseExpression("@teslaBean")
+				.getValue(springContext, Inventor.class); // sólo analiza
+
 		Assert.assertNotNull(tesla);
-		
+
 		log.info("tesla: {}", tesla);
 
 		// -------------------------------------
 
-		Integer inventionsLength = spelParser.parseExpression("@teslaBean.inventions.length").getValue(springContext,
-				int.class); //sólo analiza
-		
+		Integer inventionsLength = spelParser
+				.parseExpression("@teslaBean.inventions.length")
+				.getValue(springContext, int.class); // sólo analiza
+
 		Assert.assertNotNull(inventionsLength);
-		
+
 		log.info("inventionsLength: {}", inventionsLength);
 
 		// -------------------------------------
 
-		List<String> inventions = spelParser.parseExpression("@teslaBean.inventions").getValue(springContext,
-				List.class); //sólo analiza
-		
+		List<String> inventions = spelParser
+				.parseExpression("@teslaBean.inventions")
+				.getValue(springContext, List.class); // sólo analiza
+
 		Assert.assertNotNull(inventions);
-		
+
 		log.info("inventions: {}", inventions);
 
 		Assert.assertEquals(3, inventions.size());

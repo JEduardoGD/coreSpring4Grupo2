@@ -23,7 +23,7 @@ public class PropertyPlaceholderTest {
 	// Inyectar
 	@Autowired
 	private FavouriteRockBands rockbands;
-	
+
 	@Value("#{ favouriteRockBand.toString }")
 	private String rockbandsToString;
 
@@ -60,10 +60,14 @@ public class PropertyPlaceholderTest {
 
 		Assert.assertEquals("Guns n' Roses", rockbands.getFirstRockBand());
 		Assert.assertEquals("AC/DC", rockbands.getSecondRockBand());
-		
-		Assert.assertEquals("My favourites rockbands are: Guns n' Roses and AC/DC", rockbands.toString());
 
-		Assert.assertEquals("My favourites rockbands are: Guns n' Roses and AC/DC", rockbandsToString);
+		Assert.assertEquals(
+				"My favourites rockbands are: Guns n' Roses and AC/DC",
+				rockbands.toString());
+
+		Assert.assertEquals(
+				"My favourites rockbands are: Guns n' Roses and AC/DC",
+				rockbandsToString);
 
 		log.info("rockbands: {}", rockbands);
 	}

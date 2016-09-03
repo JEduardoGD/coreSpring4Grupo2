@@ -5,7 +5,8 @@ import org.certificatic.spring.core.practica19.javaconfig.bean.api.impl.Quadrati
 
 public class Chicharronera extends QuadraticEquationServiceImpl {
 
-	public static QuadraticEquationResult calculate(double a, double b, double c) {
+	public static QuadraticEquationResult calculate(double a, double b,
+			double c) {
 
 		Chicharronera chicharronera = new Chicharronera();
 
