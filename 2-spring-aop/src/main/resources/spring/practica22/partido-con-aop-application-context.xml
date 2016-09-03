@@ -9,6 +9,6 @@
 	<context:component-scan
 		base-package="org.certificatic.spring.aop.practica22,org.certificatic.spring.aop.util.bean" />
 
-	<!-- Define configuración spring aop -->
+	<!-- TODO 6. Define configuración spring aop -->
 
 </beans>

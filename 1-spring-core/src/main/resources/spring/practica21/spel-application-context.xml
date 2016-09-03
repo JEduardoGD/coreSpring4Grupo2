@@ -28,11 +28,4 @@
 	<!-- Define Bean SocietyStub -->
 
 
-
-	<!-- TODO 19. Method injection -->
-	<!-- Define SingletonBean para inyectar prototype -->
-
-	<!-- TODO 19. Method injection -->
-	<!-- Define Bean Prototype StringProcessor a inyectar en SingletonBean -->
-
 </beans>
