@@ -26,8 +26,7 @@ public class ProfilingAspect implements Ordered {
 	// org.certificatic.spring.aop.practica24.bank..* y cache al menos el primer
 	// argumento
 	public Object beforeAccountMethodExecutionAccount(ProceedingJoinPoint pjp,
-			Object obj)
-			throws Throwable {
+			Object obj) throws Throwable {
 
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start(pjp.toShortString());
@@ -35,7 +34,9 @@ public class ProfilingAspect implements Ordered {
 		boolean isExceptionThrown = false;
 
 		try {
-			return pjp.proceed();
+
+			return null; // proceder con la ejecución al target object
+
 		} catch (RuntimeException e) {
 			isExceptionThrown = true;
 			throw e;
@@ -44,8 +45,8 @@ public class ProfilingAspect implements Ordered {
 			TaskInfo taskInfo = stopWatch.getLastTaskInfo();
 
 			String profileMessage = taskInfo.getTaskName() + ": "
-					+ taskInfo.getTimeMillis() + " ms" +
-					(isExceptionThrown ? " (thrown Exception)" : "");
+					+ taskInfo.getTimeMillis() + " ms"
+					+ (isExceptionThrown ? " (thrown Exception)" : "");
 
 			log.info("{}, object intercepted: {}",
 					colorWriter.getColoredMessage(Color.GREEN, profileMessage),

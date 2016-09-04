@@ -9,6 +9,7 @@
 	<context:component-scan
 		base-package="org.certificatic.spring.aop.practica24.bank,org.certificatic.spring.aop.util.bean" />
 
+	<!-- TODO 11. -->
 	<aop:config>
 
 		<!-- no works for combination in advice pointcut expression -->
