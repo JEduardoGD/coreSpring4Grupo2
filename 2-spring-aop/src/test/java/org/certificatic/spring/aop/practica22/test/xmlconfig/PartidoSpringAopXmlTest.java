@@ -5,6 +5,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -12,11 +13,11 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(
-		locations = "classpath:/spring/practica22/partido-con-aop-application-context.xml")
+@ContextConfiguration(locations = "classpath:/spring/practica22/partido-con-aop-application-context.xml")
 public class PartidoSpringAopXmlTest {
 
 	// Injecta Jugador Bean
+	@Value("#{jugadorBean}")
 	private IJugador jugador;
 
 	@Before

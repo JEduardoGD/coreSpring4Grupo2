@@ -10,5 +10,70 @@
 		base-package="org.certificatic.spring.aop.practica22,org.certificatic.spring.aop.util.bean" />
 
 	<!-- TODO 6. Define configuración spring aop -->
+	<aop:config>
+
+		<aop:aspect id="audienciaAspectBean" ref="audienciaBean">
+
+			<!-- Pointcut defs -->
+			<aop:pointcut id="cuandoUnJugadorEjecutaUnPase"
+				expression="execution( void org.certificatic.spring.aop.practica22..IJugador.ejecutarPase() )" />
+
+			<aop:pointcut id="cuandoUnJugadorCobraUnPenal"
+				expression="execution( void org.certificatic.spring.aop.practica22..IJugador.cobrarPenal(..) )" />
+
+			<aop:pointcut id="cuandoUnJugadorTiraAGol"
+				expression="execution( void org.certificatic.spring.aop.practica22..IJugador.tirarAGol(..) )" />
+
+			<aop:pointcut id="cuandoUnJugadorEsExpulsado"
+				expression="execution( void org.certificatic.spring.aop.practica22..IJugador.esExpulsado() )" />
+
+			<!-- advices of cuandoUnJugadorEjecutaUnPase (Pointcut) -->
+			<aop:before pointcut-ref="cuandoUnJugadorEjecutaUnPase"
+				method="gritaOle" />
+
+			<aop:after pointcut-ref="cuandoUnJugadorEjecutaUnPase"
+				method="gritaOle" />
+
+			<!-- advices of cuandoUnJugadorCobraUnPenal (Pointcut) -->
+			<aop:before pointcut-ref="cuandoUnJugadorCobraUnPenal"
+				method="sePoneDePie" />
+
+			<aop:after-returning pointcut-ref="cuandoUnJugadorCobraUnPenal"
+				method="gritaGol" />
+
+			<aop:after-throwing pointcut-ref="cuandoUnJugadorCobraUnPenal"
+				method="abuchear" />
+
+			<aop:after-throwing pointcut-ref="cuandoUnJugadorCobraUnPenal"
+				method="abuchear" />
+
+			<aop:after pointcut-ref="cuandoUnJugadorCobraUnPenal"
+				method="seSienta" />
+
+			<!-- advices of cometerFalta -->
+			<aop:after method="abuchear"
+				pointcut="execution( void org.certificatic.spring.aop.practica22..IJugador.cometerFalta() )" />
+
+			<!-- advices of cuandoUnJugadorTiraAGol (Pointcut) -->
+			<aop:after-returning pointcut-ref="cuandoUnJugadorTiraAGol"
+				method="gritaGol" />
+
+			<aop:after-returning pointcut-ref="cuandoUnJugadorTiraAGol"
+				method="gritaGol" />
+
+			<aop:after-returning pointcut-ref="cuandoUnJugadorTiraAGol"
+				method="aplaudir" />
+
+			<aop:after-returning pointcut-ref="cuandoUnJugadorTiraAGol"
+				method="aplaudir" />
+
+			<!-- advices of cuandoUnJugadorEsExpulsado (Pointcut) -->
+			<aop:around pointcut-ref="cuandoUnJugadorEsExpulsado"
+				method="sePoneDeNervios" />
+
+		</aop:aspect>
+
+	</aop:config>
+
 
 </beans>

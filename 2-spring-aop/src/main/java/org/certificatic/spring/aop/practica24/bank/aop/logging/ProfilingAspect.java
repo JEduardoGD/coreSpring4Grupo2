@@ -1,6 +1,8 @@
 package org.certificatic.spring.aop.practica24.bank.aop.logging;
 
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
 import org.certificatic.spring.aop.util.Color;
 import org.certificatic.spring.aop.util.bean.api.IColorWriter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 //Define el Bean como Aspecto
+@Aspect
 @Component("profilingAspect")
 @Slf4j
 public class ProfilingAspect implements Ordered {
@@ -25,9 +28,9 @@ public class ProfilingAspect implements Ordered {
 	// Define Around ADvice que intercepte cualquier método del paquete
 	// org.certificatic.spring.aop.practica24.bank..* y cache al menos el primer
 	// argumento
+	@Around("within(org.certificatic.spring.aop.practica24.bank..*) && args(obj,..) ")
 	public Object beforeAccountMethodExecutionAccount(ProceedingJoinPoint pjp,
-			Object obj)
-			throws Throwable {
+			Object obj) throws Throwable {
 
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start(pjp.toShortString());
@@ -44,8 +47,8 @@ public class ProfilingAspect implements Ordered {
 			TaskInfo taskInfo = stopWatch.getLastTaskInfo();
 
 			String profileMessage = taskInfo.getTaskName() + ": "
-					+ taskInfo.getTimeMillis() + " ms" +
-					(isExceptionThrown ? " (thrown Exception)" : "");
+					+ taskInfo.getTimeMillis() + " ms"
+					+ (isExceptionThrown ? " (thrown Exception)" : "");
 
 			log.info("{}, object intercepted: {}",
 					colorWriter.getColoredMessage(Color.GREEN, profileMessage),

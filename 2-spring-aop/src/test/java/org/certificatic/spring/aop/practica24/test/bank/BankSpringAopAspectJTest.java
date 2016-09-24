@@ -14,8 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(
-		locations = "classpath:/spring/practica24/bank-aop-aspectj-application-context.xml")
+@ContextConfiguration(locations = "classpath:/spring/practica24/bank-aop-aspectj-application-context.xml")
 public class BankSpringAopAspectJTest {
 
 	@Autowired
