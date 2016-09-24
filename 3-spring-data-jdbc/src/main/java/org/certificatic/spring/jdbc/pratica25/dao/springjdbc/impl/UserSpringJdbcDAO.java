@@ -12,7 +12,6 @@ import org.certificatic.spring.jdbc.pratica25.domain.entities.User;
 import org.springframework.context.annotation.Profile;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.ResultSetExtractor;
@@ -48,9 +47,6 @@ public class UserSpringJdbcDAO extends GenericSpringJdbcDAO<User, Long>
 	private static final String DELETE_ACCOUNT_WHERE_CUSTOMER_ID = "DELETE FROM SPRING_DATA_ACCOUNT_TBL WHERE FK_CUSTOMER_ID = ?";
 	private static final String DELETE_USER_WHERE_USER_ID = "DELETE FROM SPRING_DATA_USER_TBL WHERE USER_ID = ?";
 	private static final String DELETE_CUSTOMER_WHERE_CUSTOMER_ID = "DELETE FROM SPRING_DATA_CUSTOMER_TBL WHERE CUSTOMER_ID = ?";
-
-	// borrar
-	private JdbcTemplate jdbcTemplate;
 
 	@Override
 	public void insert(User entity) {
