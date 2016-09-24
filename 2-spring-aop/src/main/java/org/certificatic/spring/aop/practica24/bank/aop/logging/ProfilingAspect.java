@@ -39,7 +39,7 @@ public class ProfilingAspect implements Ordered {
 
 		try {
 
-			return null; // proceder con la ejecución al target object
+			return pjp.proceed(); // proceder con la ejecución al target object
 
 		} catch (RuntimeException e) {
 			isExceptionThrown = true;

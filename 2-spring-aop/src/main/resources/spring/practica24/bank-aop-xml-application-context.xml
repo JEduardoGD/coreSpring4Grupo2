@@ -40,9 +40,14 @@
 		<aop:aspect ref="webAccountLoggingAspect">
 
 			<!-- completar advice before de método beforeAccountMethodExecutionAccount -->
+			<aop:before
+				pointcut="within(org.certificatic.spring.aop.practica24.bank.web..*) and args(cuenta, ..)"
+				method="beforeAccountMethodExecutionAccount" arg-names="cuenta" />
 
 			<!-- completar advice before de método beforeAccountMethodExecutionLong -->
-
+			<aop:before
+				pointcut="within(org.certificatic.spring.aop.practica24.bank.web..*) and args(id, ..)"
+				method="beforeAccountMethodExecutionLong" arg-names="id" />
 
 		</aop:aspect>
 
@@ -50,17 +55,32 @@
 
 			<!-- 1. completar pointcut (Account) within(org.certificatic.spring.aop.practica24.bank.dao..*) 
 				and args(yy, ..) -->
-			<!-- 2. completar advice before para pointcut definido anteriormente (Account) -->
+			<aop:pointcut id="beforeDAOAccountMethodExecutionAccountPointcut"
+				expression="within(org.certificatic.spring.aop.practica24.bank.dao..*) and args(yy, ..)" />
 
+			<!-- 2. completar advice before para pointcut definido anteriormente (Account) -->
+			<aop:before pointcut-ref="beforeDAOAccountMethodExecutionAccountPointcut"
+				method="beforeDAOAccountMethodExecutionAccount" />
 
 			<!-- 1. completar pointcut (Long) within(org.certificatic.spring.aop.practica24.bank.dao..*) 
 				and args(bb, ..) -->
-			<!-- 2. completar advice before para pointcut definido anteriormente (Long) -->
+			<aop:pointcut id="beforeDAOAccountMethodExecutionLongPointcut"
+				expression="within(org.certificatic.spring.aop.practica24.bank.dao..*) and args(bb, ..)" />
 
+			<!-- 2. completar advice before para pointcut definido anteriormente (Long) -->
+			<aop:before pointcut-ref="beforeDAOAccountMethodExecutionLongPointcut"
+				method="beforeDAOAccountMethodExecutionLong" />
 
 		</aop:aspect>
 
 		<!-- Define aspecto profilingAspect -->
+		<aop:aspect ref="profilingAspect">
+
+			<aop:around
+				pointcut="within(org.certificatic.spring.aop.practica24.bank..*) and args(obj,..)"
+				arg-names="obj" method="beforeAccountMethodExecutionAccount" />
+
+		</aop:aspect>
 
 	</aop:config>
 
