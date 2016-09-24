@@ -3,10 +3,8 @@ package org.certificatic.spring.aop.practica23.test.aspectjconfig;
 import org.certificatic.spring.aop.practica23.aspectjconfig.SpringAspectJAopConfig;
 import org.certificatic.spring.aop.practica23.aspectjconfig.bean.api.IVoluntario;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -17,10 +15,10 @@ import lombok.extern.slf4j.Slf4j;
 @ContextConfiguration(classes = { SpringAspectJAopConfig.class })
 public class MagoSpringAopAspectJTest {
 
-	@Autowired
+	// Inyectar
 	private IVoluntario voluntario;
 
-	@Before
+	// Inyectar
 	public void setUp() {
 		Assert.assertNotNull(voluntario);
 	}
@@ -36,7 +34,7 @@ public class MagoSpringAopAspectJTest {
 
 		String pensamiento = voluntario.getPensamiento(joke);
 
-		String expectedPensamiento = "coca-cola";
+		String expectedPensamiento = null; // ¿Cual es el pensamiento esperado?
 
 		Assert.assertEquals(expectedPensamiento, pensamiento);
 
@@ -55,7 +53,7 @@ public class MagoSpringAopAspectJTest {
 
 		String pensamiento = voluntario.getPensamiento(joke);
 
-		String expectedPensamiento = "No me he bañado en 5 dias";
+		String expectedPensamiento = null; // ¿Cual es el pensamiento esperado?
 
 		Assert.assertEquals(expectedPensamiento, pensamiento);
 

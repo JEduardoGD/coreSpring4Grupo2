@@ -38,7 +38,9 @@ public class ProfilingAspect implements Ordered {
 		boolean isExceptionThrown = false;
 
 		try {
-			return pjp.proceed();
+
+			return null; // proceder con la ejecución al target object
+
 		} catch (RuntimeException e) {
 			isExceptionThrown = true;
 			throw e;
