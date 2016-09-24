@@ -4,14 +4,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.certificatic.spring.jdbc.pratica25.dao.api.IUserDAO;
 import org.certificatic.spring.jdbc.pratica25.dao.springjdbc.GenericSpringJdbcDAO;
+import org.certificatic.spring.jdbc.pratica25.dao.springjdbc.rowmapper.UserRowMapper;
+import org.certificatic.spring.jdbc.pratica25.domain.entities.Customer;
 import org.certificatic.spring.jdbc.pratica25.domain.entities.User;
 import org.springframework.context.annotation.Profile;
 import org.springframework.dao.DataAccessException;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.ResultSetExtractor;
@@ -61,10 +63,19 @@ public class UserSpringJdbcDAO extends GenericSpringJdbcDAO<User, Long>
 			@Override
 			public PreparedStatement createPreparedStatement(
 					Connection connection) throws SQLException {
-				// Implementar
-				return null;
+
+				PreparedStatement ps = connection.prepareStatement(
+						INSERT_CUSTOMER,
+						new String[] { "CUSTOMER_ID", "NAME", "LAST_NAME" });
+
+				ps.setString(1, entity.getCustomer().getName());
+				ps.setString(2, entity.getCustomer().getLastName());
+
+				return ps;
 			}
 		}, keyHolder);
+
+		entity.getCustomer().setId(keyHolder.getKey().longValue());
 
 		// Implementar INSERT USER recuperando fk_customer_id
 		keyHolder = new GeneratedKeyHolder();
@@ -74,10 +85,20 @@ public class UserSpringJdbcDAO extends GenericSpringJdbcDAO<User, Long>
 			@Override
 			public PreparedStatement createPreparedStatement(
 					Connection connection) throws SQLException {
-				// Implementar
-				return null;
+
+				PreparedStatement ps = connection.prepareStatement(INSERT_USER,
+						new String[] { "USER_ID", "FK_CUSTOMER_ID", "USERNAME",
+								"PASSWORD" });
+
+				ps.setLong(1, entity.getCustomer().getId());
+				ps.setString(2, entity.getUsername());
+				ps.setString(3, entity.getPassword());
+
+				return ps;
 			}
 		}, keyHolder);
+
+		entity.setId(keyHolder.getKey().longValue());
 
 	}
 
@@ -87,7 +108,10 @@ public class UserSpringJdbcDAO extends GenericSpringJdbcDAO<User, Long>
 		// Implementar UPDATE CUSTOMER
 
 		// Implementado mediante sql y parámetros vararg
-		// this.jdbcTemplate.update(UPDATE_CUSTOMER, new Object[] {});
+		/*this.jdbcTemplate.update(UPDATE_CUSTOMER,
+				new Object[] { entity.getCustomer().getName(),
+						entity.getCustomer().getLastName(),
+						entity.getCustomer().getId() });*/
 
 		// Implementado mediante sql y setteo de parametros mediante
 		// PreparedStatementSetter
@@ -96,7 +120,10 @@ public class UserSpringJdbcDAO extends GenericSpringJdbcDAO<User, Long>
 					@Override
 					public void setValues(PreparedStatement ps)
 							throws SQLException {
-						// Implementar
+
+						ps.setString(1, entity.getCustomer().getName());
+						ps.setString(2, entity.getCustomer().getLastName());
+						ps.setLong(3, entity.getCustomer().getId());
 					}
 				});
 
@@ -117,7 +144,6 @@ public class UserSpringJdbcDAO extends GenericSpringJdbcDAO<User, Long>
 
 		// Implementar SELECT USER BY ID
 		// FIND COMPLETE USER (WITH CUSTOMER) BY ID
-
 		try {
 			u = this.jdbcTemplate.queryForObject(
 					SELECT_USER_CUSTOMER_WHERE_CUSTOMER_ID,
@@ -125,12 +151,26 @@ public class UserSpringJdbcDAO extends GenericSpringJdbcDAO<User, Long>
 						@Override
 						public User mapRow(ResultSet rs, int rowNum)
 								throws SQLException {
-							// Implementar
-							return null;
-						}
-					}, new Object[] {});
 
-		} catch (EmptyResultDataAccessException ex) {
+							Customer customer = new Customer();
+							User user = new User();
+
+							user.setCustomer(customer);
+							customer.setUser(user);
+
+							user.setId(rs.getLong("USER_ID"));
+							user.setUsername(rs.getString("USERNAME"));
+							user.setPassword(rs.getString("PASSWORD"));
+
+							customer.setId(rs.getLong("CUSTOMER_ID"));
+							customer.setName(rs.getString("NAME"));
+							customer.setLastName(rs.getString("LAST_NAME"));
+
+							return user;
+						}
+					}, new Object[] { id });
+
+		} catch (DataAccessException ex) {
 			// Cuando se usa queryForObject se espera al menos 1 resultado.
 			return null;
 		}
@@ -153,14 +193,15 @@ public class UserSpringJdbcDAO extends GenericSpringJdbcDAO<User, Long>
 
 		// Pasar parámetros a update
 		this.jdbcTemplate.update(DELETE_ACCOUNT_WHERE_CUSTOMER_ID,
-				new Object[] {});
+				new Object[] { entity.getCustomer().getId() });
 
 		// Pasar parámetros a update
-		this.jdbcTemplate.update(DELETE_USER_WHERE_USER_ID, new Object[] {});
+		this.jdbcTemplate.update(DELETE_USER_WHERE_USER_ID,
+				new Object[] { entity.getId() });
 
 		// Pasar parámetros a update
 		this.jdbcTemplate.update(DELETE_CUSTOMER_WHERE_CUSTOMER_ID,
-				new Object[] {});
+				new Object[] { entity.getCustomer().getId() });
 
 		return entity;
 	}
@@ -171,16 +212,27 @@ public class UserSpringJdbcDAO extends GenericSpringJdbcDAO<User, Long>
 		List<User> userList = null;
 
 		// FIND COMPLETE ALL USER (WITH CUSTOMER)
-		// Implementar mediante REsultSetExtractor
+		// Implementar mediante ResultSetExtractor
+
 		userList = this.jdbcTemplate.query(SELECT_ALL_USER_CUSTOMER,
 				new ResultSetExtractor<List<User>>() {
+
+					private UserRowMapper userRowMapper = new UserRowMapper();
 
 					@Override
 					public List<User> extractData(ResultSet rs)
 							throws SQLException, DataAccessException {
 
-						// Implementar
-						return null;
+						List<User> lu = new ArrayList<>();
+
+						int i = 0;
+						while (rs.next()) {
+
+							User u = userRowMapper.mapRow(rs, i++);
+
+							lu.add(u);
+						}
+						return lu;
 					}
 
 				});

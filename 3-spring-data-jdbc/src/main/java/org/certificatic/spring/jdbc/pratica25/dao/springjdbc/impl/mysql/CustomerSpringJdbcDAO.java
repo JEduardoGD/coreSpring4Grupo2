@@ -106,8 +106,7 @@ public class CustomerSpringJdbcDAO extends GenericSpringJdbcDAO<Customer, Long>
 
 		// UPDATE USER
 		this.userSqlUpdate.execute(entity.getUser().getId(),
-				entity.getUser().getUsername(),
-				entity.getUser().getPassword());
+				entity.getUser().getUsername(), entity.getUser().getPassword());
 	}
 
 	@Override

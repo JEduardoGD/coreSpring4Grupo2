@@ -2,7 +2,6 @@ package org.certificatic.spring.jdbc.practica25.test.dao.springjdbc.parte2;
 
 import java.util.List;
 
-import org.certificatic.spring.jdbc.pratica25.dao.api.IAccountDAO;
 import org.certificatic.spring.jdbc.pratica25.dao.api.ICustomerDAO;
 import org.certificatic.spring.jdbc.pratica25.dao.api.IUserDAO;
 import org.certificatic.spring.jdbc.pratica25.domain.entities.Customer;
@@ -12,16 +11,19 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(
-		locations = "classpath:/spring/practica25/spring-jdbc-application-context.xml")
+@ContextConfiguration(locations = "classpath:/spring/practica25/spring-jdbc-application-context.xml")
+@Transactional
+@Rollback(false)
 @ActiveProfiles("h2-in-memory")
 public class UserSpringJdbcDAOTest {
 
@@ -31,14 +33,14 @@ public class UserSpringJdbcDAOTest {
 	@Autowired
 	private ICustomerDAO customerDAO;
 
-	@Autowired
-	private IAccountDAO accountDAO;
+	// @Autowired
+	// private IAccountDAO accountDAO;
 
 	@Before
 	public void setUp() {
 		Assert.assertNotNull(userDAO);
 		Assert.assertNotNull(customerDAO);
-		Assert.assertNotNull(accountDAO);
+		// Assert.assertNotNull(accountDAO);
 	}
 
 	@Test
@@ -53,11 +55,12 @@ public class UserSpringJdbcDAOTest {
 
 		newUser.setCustomer(newCustomer);
 
+		log.info("newUser (antes) : {} {}", newUser,
+				System.identityHashCode(newUser));
+
 		userDAO.insert(newUser);
 
-		log.info("newUser : {} {}", newUser, System.identityHashCode(newUser));
-
-		log.info("newUser (detached) : {} {}", newUser,
+		log.info("newUser (despues) : {} {}", newUser,
 				System.identityHashCode(newUser));
 
 		User user = userDAO.findById(newUser.getId());

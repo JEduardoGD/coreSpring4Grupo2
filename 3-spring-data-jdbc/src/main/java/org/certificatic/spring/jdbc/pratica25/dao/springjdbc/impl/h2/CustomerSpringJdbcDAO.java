@@ -9,13 +9,13 @@ import java.util.Map;
 
 import org.certificatic.spring.jdbc.pratica25.dao.api.ICustomerDAO;
 import org.certificatic.spring.jdbc.pratica25.dao.springjdbc.GenericSpringJdbcDAO;
+import org.certificatic.spring.jdbc.pratica25.dao.springjdbc.rowmapper.CustomerRowMapper;
 import org.certificatic.spring.jdbc.pratica25.domain.entities.Customer;
 import org.certificatic.spring.jdbc.pratica25.domain.entities.User;
 import org.springframework.context.annotation.Profile;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.RowMapper;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
@@ -40,9 +40,6 @@ public class CustomerSpringJdbcDAO extends GenericSpringJdbcDAO<Customer, Long>
 	private static final String DELETE_USER_WHERE_USER_ID = "DELETE FROM SPRING_DATA_USER_TBL WHERE USER_ID = :userId";
 	private static final String DELETE_CUSTOMER_WHERE_CUSTOMER_ID = "DELETE FROM SPRING_DATA_CUSTOMER_TBL WHERE CUSTOMER_ID = :customerId";
 
-	// Borrar
-	private NamedParameterJdbcTemplate namedJdbcTemplate;
-
 	@Override
 	public void insert(Customer entity) {
 
@@ -50,11 +47,14 @@ public class CustomerSpringJdbcDAO extends GenericSpringJdbcDAO<Customer, Long>
 		MapSqlParameterSource parameterSource = new MapSqlParameterSource();
 
 		// Implementar Settear parametros a parameterSource
+		parameterSource.addValue("name", entity.getName());
+		parameterSource.addValue("lastName", entity.getLastName());
 
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 
 		// Implementar pasar argumentos a update
-		this.namedJdbcTemplate.update(null, null, null);
+		this.namedJdbcTemplate.update(INSERT_CUSTOMER, parameterSource,
+				keyHolder);
 
 		entity.setId(keyHolder.getKey().longValue());
 
@@ -62,11 +62,14 @@ public class CustomerSpringJdbcDAO extends GenericSpringJdbcDAO<Customer, Long>
 		parameterSource = new MapSqlParameterSource();
 
 		// Implementar Settear parametros a parameterSource
+		parameterSource.addValue("fkCustomerId", entity.getId());
+		parameterSource.addValue("username", entity.getUser().getUsername());
+		parameterSource.addValue("password", entity.getUser().getPassword());
 
 		keyHolder = new GeneratedKeyHolder();
 
 		// Implementar pasar argumentos a update
-		this.namedJdbcTemplate.update(null, null, null);
+		this.namedJdbcTemplate.update(INSERT_USER, parameterSource, keyHolder);
 
 		entity.getUser().setId(keyHolder.getKey().longValue());
 	}
@@ -78,13 +81,23 @@ public class CustomerSpringJdbcDAO extends GenericSpringJdbcDAO<Customer, Long>
 		Map<String, Object> mapParameters = new HashMap<>();
 
 		// Implementar Settear parametros a mapParameters
+		mapParameters.put("name", entity.getName());
+		mapParameters.put("lastName", entity.getLastName());
+		mapParameters.put("customerId", entity.getId());
+
 		// Implementar NamedParameterJdbcTemplate y pasar argumentos a update
+		this.namedJdbcTemplate.update(UPDATE_CUSTOMER, mapParameters);
 
 		// UPDATE USER
 		mapParameters = new HashMap<>();
 
 		// Implementar Settear parametros a mapParameters
+		mapParameters.put("username", entity.getUser().getUsername());
+		mapParameters.put("password", entity.getUser().getPassword());
+		mapParameters.put("userId", entity.getUser().getId());
+
 		// Implementar NamedParameterJdbcTemplate y pasar argumentos a update
+		this.namedJdbcTemplate.update(UPDATE_USER, mapParameters);
 
 	}
 
@@ -98,19 +111,18 @@ public class CustomerSpringJdbcDAO extends GenericSpringJdbcDAO<Customer, Long>
 
 		try {
 			customer = this.namedJdbcTemplate.queryForObject(SELECT_CUSTOMER,
-					parameterSource,
-					new RowMapper<Customer>() {
-						@Override
-						public Customer mapRow(ResultSet rs, int rowNum)
-								throws SQLException {
+					parameterSource, (rs, rowNum) -> {
 
-							// Implementar Customer solo.
+						Customer c = new Customer();
 
-							return null;
-						}
+						c.setId(rs.getLong("CUSTOMER_ID"));
+						c.setName(rs.getString("NAME"));
+						c.setLastName(rs.getString("LAST_NAME"));
+
+						return c;
 					});
 
-		} catch (EmptyResultDataAccessException ex) {
+		} catch (DataAccessException ex) {
 			// Cuando se usa queryForObject se espera al menos 1 resultado.
 			return null;
 		}
@@ -123,9 +135,13 @@ public class CustomerSpringJdbcDAO extends GenericSpringJdbcDAO<Customer, Long>
 				SELECT_USER_WHERE_CUSTOMER_ID, parameterSource,
 				(ResultSet rs, int rowNum) -> {
 
-					// Implementar User solo
+					User u = new User();
 
-					return null;
+					u.setId(rs.getLong("USER_ID"));
+					u.setUsername(rs.getString("USERNAME"));
+					u.setPassword(rs.getString("PASSWORD"));
+
+					return u;
 				});
 
 		customer.setUser(user);
@@ -148,8 +164,19 @@ public class CustomerSpringJdbcDAO extends GenericSpringJdbcDAO<Customer, Long>
 		// DELETE COMPLETE RELATIONS OF CUSTOMER WITH ALL TABLES
 		Map<String, Object> mapParameters = new HashMap<>();
 
+		mapParameters.put("customerId", entity.getId());
+		mapParameters.put("userId", entity.getUser().getId());
+
 		// Implementar DELETE's utilizando NamedParameterJdbcTemplate y
 		// mapParameters
+
+		this.namedJdbcTemplate.update(DELETE_ACCOUNT_TABLE_WHERE_CUSTOMER_ID,
+				mapParameters);
+
+		this.namedJdbcTemplate.update(DELETE_USER_WHERE_USER_ID, mapParameters);
+
+		this.namedJdbcTemplate.update(DELETE_CUSTOMER_WHERE_CUSTOMER_ID,
+				mapParameters);
 
 		return entity;
 	}
@@ -163,6 +190,19 @@ public class CustomerSpringJdbcDAO extends GenericSpringJdbcDAO<Customer, Long>
 
 		// Implementar query utilizando NamedParameterJdbcTemplate y
 		// RowCallbackHandler
+		this.namedJdbcTemplate.query(SELECT_ALL_CUSTOMER_USER,
+				new RowCallbackHandler() {
+
+					private CustomerRowMapper customerRowMapper = new CustomerRowMapper();
+
+					private int i = 0;
+
+					@Override
+					public void processRow(ResultSet rs) throws SQLException {
+						Customer cu = customerRowMapper.mapRow(rs, i++);
+						customerList.add(cu);
+					}
+				});
 
 		return customerList;
 	}
