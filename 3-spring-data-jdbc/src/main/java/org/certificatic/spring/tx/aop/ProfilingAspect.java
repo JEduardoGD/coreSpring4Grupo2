@@ -41,7 +41,8 @@ public class ProfilingAspect implements Ordered {
 
 		log.info("{}",
 				colorWriter.getColoredMessage(Color.GREEN,
-						"initializing profiling of: " + pjp.getClass().getSimpleName()));
+						"initializing profiling of: "
+								+ pjp.getClass().getSimpleName()));
 
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start(pjp.toShortString());
@@ -57,10 +58,12 @@ public class ProfilingAspect implements Ordered {
 			stopWatch.stop();
 			TaskInfo taskInfo = stopWatch.getLastTaskInfo();
 
-			String profileMessage = taskInfo.getTaskName() + ": " + taskInfo.getTimeMillis() + " ms" +
-					(isExceptionThrown ? " (thrown Exception)" : "");
+			String profileMessage = taskInfo.getTaskName() + ": "
+					+ taskInfo.getTimeMillis() + " ms"
+					+ (isExceptionThrown ? " (thrown Exception)" : "");
 
-			log.info("{}", colorWriter.getColoredMessage(Color.GREEN, "object intercepted: " + profileMessage));
+			log.info("{}", colorWriter.getColoredMessage(Color.GREEN,
+					"object intercepted: " + profileMessage));
 		}
 	}
 }
