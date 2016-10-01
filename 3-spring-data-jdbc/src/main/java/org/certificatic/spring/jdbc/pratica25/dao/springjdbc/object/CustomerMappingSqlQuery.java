@@ -20,8 +20,8 @@ public class CustomerMappingSqlQuery extends MappingSqlQuery<Customer> {
 	public CustomerMappingSqlQuery(DataSource dataSource) {
 
 		super(dataSource, SELECT);
-		declareParameter(new SqlParameter("CUSTOMER_ID", Types.INTEGER));
-		compile();
+		this.declareParameter(new SqlParameter("CUSTOMER_ID", Types.INTEGER));
+		this.compile();
 	}
 
 	@Override

@@ -12,54 +12,44 @@ import org.certificatic.spring.jdbc.pratica25.dao.springjdbc.GenericSpringJdbcDA
 import org.certificatic.spring.jdbc.pratica25.dao.springjdbc.mapper.UserEntity;
 import org.certificatic.spring.jdbc.pratica25.dao.springjdbc.object.CustomerMappingSqlQuery;
 import org.certificatic.spring.jdbc.pratica25.dao.springjdbc.object.CustomerSqlUpdate;
+import org.certificatic.spring.jdbc.pratica25.dao.springjdbc.object.CustomerStoredProcedureCall;
 import org.certificatic.spring.jdbc.pratica25.dao.springjdbc.object.UserSqlUpdate;
 import org.certificatic.spring.jdbc.pratica25.dao.springjdbc.rowmapper.CustomerRowMapper;
 import org.certificatic.spring.jdbc.pratica25.domain.entities.Customer;
-import org.certificatic.spring.jdbc.pratica25.domain.entities.User;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.annotation.Profile;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
-import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-
-import lombok.Getter;
 
 @Repository
 @Profile("mysql")
 public class CustomerSpringJdbcDAO extends GenericSpringJdbcDAO<Customer, Long>
 		implements ICustomerDAO, InitializingBean {
 
-	@SuppressWarnings("unused")
-	private SimpleJdbcCall readCustomerProcedure;
+	private CustomerStoredProcedureCall readCustomerProcedure;
 
 	private SimpleJdbcInsert insertCustomer;
 	private SimpleJdbcInsert insertUser;
 
+	@SuppressWarnings("unused")
 	private CustomerMappingSqlQuery customerSqlQuery;
+
 	private CustomerSqlUpdate customerSqlUpdate;
+
 	private UserSqlUpdate userSqlUpdate;
 
 	private static final String SELECT_ALL_CUSTOMER_USER = "SELECT * FROM SPRING_DATA_CUSTOMER_TBL, SPRING_DATA_USER_TBL WHERE CUSTOMER_ID = FK_CUSTOMER_ID";
 
-	// Borrar
-	private NamedParameterJdbcTemplate namedJdbcTemplate;
-
-	// Borrar
-	private @Getter JdbcTemplate jdbcTemplate;
-
 	@Override
 	public void afterPropertiesSet() throws Exception {
 
-		this.readCustomerProcedure = new SimpleJdbcCall(
-				this.getJdbcTemplate().getDataSource())
-						.withProcedureName("read_customer_user");
+		this.readCustomerProcedure = new CustomerStoredProcedureCall(
+				this.getJdbcTemplate().getDataSource(), "read_customer_user");
 
 		this.insertCustomer = new SimpleJdbcInsert(
 				this.getJdbcTemplate().getDataSource())
@@ -73,8 +63,10 @@ public class CustomerSpringJdbcDAO extends GenericSpringJdbcDAO<Customer, Long>
 
 		this.customerSqlQuery = new CustomerMappingSqlQuery(
 				this.getJdbcTemplate().getDataSource());
+
 		this.customerSqlUpdate = new CustomerSqlUpdate(
 				this.getJdbcTemplate().getDataSource());
+
 		this.userSqlUpdate = new UserSqlUpdate(
 				this.getJdbcTemplate().getDataSource());
 	}
@@ -101,8 +93,7 @@ public class CustomerSpringJdbcDAO extends GenericSpringJdbcDAO<Customer, Long>
 	public void update(Customer entity) {
 
 		// UPDATE CUSTOMER
-		this.customerSqlUpdate.execute(entity.getId(), entity.getName(),
-				entity.getLastName());
+		this.customerSqlUpdate.execute(entity);
 
 		// UPDATE USER
 		this.userSqlUpdate.execute(entity.getUser().getId(),
@@ -115,24 +106,11 @@ public class CustomerSpringJdbcDAO extends GenericSpringJdbcDAO<Customer, Long>
 		SqlParameterSource parameterSource = new MapSqlParameterSource()
 				.addValue("in_customerId", id);
 
-		Map<String, Object> out = readCustomerProcedure
-				.execute(parameterSource);
+		Customer c = null;
 
-		if ((Integer) out.get("#update-count-1") == 0)
-			return null;
+		c = readCustomerProcedure.execute(parameterSource);
 
-		User u = new User();
-		Customer c = new Customer();
-
-		u.setId(new Long((Integer) out.get("out_user_id")));
-		u.setUsername((String) out.get("out_username"));
-		u.setPassword((String) out.get("out_password"));
-
-		c.setId(new Long((Integer) out.get("out_customer_id")));
-		c.setName((String) out.get("out_name"));
-		c.setLastName((String) out.get("out_last_name"));
-		c.setUser(u);
-		c.getUser().setCustomer(c);
+		// c = this.customerSqlQuery.findObject(id);
 
 		return c;
 	}

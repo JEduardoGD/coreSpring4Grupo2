@@ -4,6 +4,7 @@ import java.sql.Types;
 
 import javax.sql.DataSource;
 
+import org.certificatic.spring.jdbc.pratica25.domain.entities.User;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.object.SqlUpdate;
 
@@ -14,15 +15,20 @@ public class UserSqlUpdate extends SqlUpdate {
 	public UserSqlUpdate(DataSource dataSource) {
 
 		super(dataSource, UPDATE);
-		declareParameter(new SqlParameter("USERNAME", Types.VARCHAR));
-		declareParameter(new SqlParameter("PASSWORD", Types.VARCHAR));
-		declareParameter(new SqlParameter("USER_ID", Types.INTEGER));
+		this.declareParameter(new SqlParameter("USERNAME", Types.VARCHAR));
+		this.declareParameter(new SqlParameter("PASSWORD", Types.VARCHAR));
+		this.declareParameter(new SqlParameter("USER_ID", Types.INTEGER));
 
-		compile();
+		this.compile();
 	}
 
 	public int execute(Long id, String username, String password) {
-		return update(username, password, id);
+		return this.update(username, password, id);
+	}
+
+	public int execute(User user) {
+		return this.update(user.getUsername(), user.getPassword(),
+				user.getId());
 	}
 
 }

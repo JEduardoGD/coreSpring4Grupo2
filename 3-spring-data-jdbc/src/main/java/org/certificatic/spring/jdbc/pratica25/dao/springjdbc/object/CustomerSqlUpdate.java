@@ -4,6 +4,7 @@ import java.sql.Types;
 
 import javax.sql.DataSource;
 
+import org.certificatic.spring.jdbc.pratica25.domain.entities.Customer;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.object.SqlUpdate;
 
@@ -14,15 +15,20 @@ public class CustomerSqlUpdate extends SqlUpdate {
 	public CustomerSqlUpdate(DataSource dataSource) {
 
 		super(dataSource, UPDATE);
-		declareParameter(new SqlParameter("NAME", Types.VARCHAR));
-		declareParameter(new SqlParameter("LAST_NAME", Types.VARCHAR));
-		declareParameter(new SqlParameter("CUSTOMER_ID", Types.INTEGER));
+		this.declareParameter(new SqlParameter("NAME", Types.VARCHAR));
+		this.declareParameter(new SqlParameter("LAST_NAME", Types.VARCHAR));
+		this.declareParameter(new SqlParameter("CUSTOMER_ID", Types.INTEGER));
 
-		compile();
+		this.compile();
 	}
 
 	public int execute(Long id, String name, String lastName) {
-		return update(name, lastName, id);
+		return this.update(name, lastName, id);
+	}
+
+	public int execute(Customer customer) {
+		return this.update(customer.getName(), customer.getLastName(),
+				customer.getId());
 	}
 
 }
