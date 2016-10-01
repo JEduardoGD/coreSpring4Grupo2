@@ -29,7 +29,7 @@ public class TransactionalService implements ITransactionalService {
 
 	@Override
 	public void insertBusinessObject(BusinessObject businessObject) {
-		log.info("{}", colorWriter.getColoredMessage(Color.BLUE,
+		log.info("{}", colorWriter.getColoredMessage(Color.RED,
 				"inside insertBusinessObject"));
 		throw new UnsupportedOperationException(
 				"unsupported insertBusinessObject");
@@ -37,7 +37,7 @@ public class TransactionalService implements ITransactionalService {
 
 	@Override
 	public void updateBusinessObject(BusinessObject businessObject) {
-		log.info("{}", colorWriter.getColoredMessage(Color.BLUE,
+		log.info("{}", colorWriter.getColoredMessage(Color.RED,
 				"inside updateBusinessObject"));
 		throw new UnsupportedOperationException(
 				"unsupported updateBusinessObject");
