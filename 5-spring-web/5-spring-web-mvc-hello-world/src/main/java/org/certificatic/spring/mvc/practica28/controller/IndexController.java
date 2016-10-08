@@ -12,15 +12,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 class IndexController {
 
 	// Inyectar required false
-	@Autowired(required = false)
+	@Autowired
 	private BeanComponent beanComponent;
 
 	// anotar request mapping a "/" y a "" por GET
-	@RequestMapping(value = { "/", "" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/", "",
+			"/index.html" }, method = RequestMethod.GET)
 	public String showIndexPage(Model model) {
 
 		// Agregar mensaje "message" al modelo
-		model.addAttribute("message", "Hello World - Sprng MVC");
+		model.addAttribute("message", "Hello World - Spring MVC ("
+				+ beanComponent.sayHello("Ivan") + ")");
 
 		return "index";
 	}

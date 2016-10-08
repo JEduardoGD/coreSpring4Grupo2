@@ -28,8 +28,15 @@
 
 	<!-- RootApplicationContext contextConfigLocation -->
 	<!-- Implementar context-param contextConfigLocation -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/spring/root-application-context.xml</param-value>
+	</context-param>
 
 	<!-- RootApplicationContext ContextLoaderListener -->
 	<!-- Implementar listener org.springframework.web.context.ContextLoaderListener -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
 
 </web-app>
