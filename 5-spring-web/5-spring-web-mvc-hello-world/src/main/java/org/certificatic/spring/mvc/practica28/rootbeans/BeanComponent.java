@@ -10,7 +10,7 @@ import lombok.Data;
 @Data
 public class BeanComponent {
 
-	@Autowired(required = false)
+	@Autowired
 	private AddServiceImpl addService;
 
 	public String sayHello(String name) {
