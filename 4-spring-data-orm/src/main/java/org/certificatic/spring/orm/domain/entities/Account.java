@@ -3,9 +3,14 @@ package org.certificatic.spring.orm.domain.entities;
 import java.math.BigDecimal;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import org.certificatic.spring.orm.domain.vo.CustomDate;
 import org.certificatic.spring.orm.hibernate.customtypes.DateTimeUserType;
@@ -27,11 +32,13 @@ import lombok.ToString;
 @AllArgsConstructor
 @Builder
 // Habilitar Entidad JPA
+@Entity
 // Habilitar nombre de tabla SPRING_DATA_ACCOUNT_TBL
+@Table(name = "SPRING_DATA_ACCOUNT_TBL")
 @ToString(exclude = { "customer" })
 @EqualsAndHashCode(exclude = { "customer" })
-@TypeDefs({ @TypeDef(name = "dateTimeUserType",
-		typeClass = DateTimeUserType.class) })
+@TypeDefs({
+		@TypeDef(name = "dateTimeUserType", typeClass = DateTimeUserType.class) })
 public class Account {
 
 	@Id
@@ -41,6 +48,8 @@ public class Account {
 
 	// Anotar mapeo Many-to-one Fetch.Lazy
 	// Anotar Join-column (columna de union) que contiene la FK a Tabla Customer
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "FK_CUSTOMER_ID")
 	private @Getter(AccessLevel.NONE) Customer customer;
 
 	@Column(name = "ACCOUNT_NUMBER")
