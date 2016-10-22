@@ -8,6 +8,7 @@
 
 <!-- permitir visualización si el usuario NO está autenticado -->
 
+<security:autorize access="isAnonymous()">
 	<div id="login-error" class="error">${errorMessage}</div>
 
 	<!-- agregar action spring security y input names -->
@@ -26,13 +27,14 @@
 				class="button" type="submit" value="Login" />
 		</div>
 	</form>
-	
+</security:autorize>
 <!--  -->
 
 <!-- permitir visualización si el usuario está autenticado -->
+<security:autorize access="isAutenticated()">
 	<h2>
-		¡ User '<!-- agregar usuario de spring authentication -->' you're already authenticated !
+		¡ User '<!-- agregar usuario de spring authentication --><security:autentication property="principal.username" /> you're already authenticated !
 	</h2>
-
+</security:autorize>
 	<!-- agregar autorities de spring authentication -->
 <!--  -->

@@ -44,6 +44,7 @@
 			<h2>Spring MVC CRUD Application</h2>
 			<jsp:include page="../template/top_menu.jsp" />
 		</div>
+		<security:autorize access="isAutenticated()">
 		<div id="top-panel">
 			<div id="panel">
 				<ul>
@@ -54,6 +55,7 @@
 				</ul>
 			</div>
 		</div>
+		</security:autorize>
 		<div id="wrapper">
 			<div id="content">
 				<jsp:include page="content_login.jsp" />
