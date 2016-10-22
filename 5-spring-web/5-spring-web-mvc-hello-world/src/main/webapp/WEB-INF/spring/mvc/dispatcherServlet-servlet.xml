@@ -10,7 +10,7 @@
 	<context:component-scan
 		base-package="org.certificatic.spring.mvc.practica28,org.certificatic.spring.mvc.practica29">
 		<context:exclude-filter type="regex"
-			expression="org.certificatic.spring.mvc.practica28.rootbeans.*" />
+			expression="org.certificatic.spring.mvc.practica28.rootbeans.*,org.certificatic.spring.mvc.practica31.rootbeans.*" />
 	</context:component-scan>
 
 	<!-- Agregar bean ContactFormValidationConfig para habilitar configuración 

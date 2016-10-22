@@ -5,17 +5,22 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.print.attribute.standard.Media;
 
 import org.certificatic.spring.validation.practica30.parte1.domain.Person;
 import org.certificatic.spring.validation.practica30.parte1.domain.Persons;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 // Anotar RestController
 // Anotar request mapping "/persons"
+@RequestMapping("/person")
 public class PersonsController {
 
 	private List<Person> persons = Collections.synchronizedList(new ArrayList<Person>());
@@ -32,6 +37,8 @@ public class PersonsController {
 	}
 
 	// Anotar request mapping "/", "", con metodo GET y produciendo json y xml
+	@RequestMapping(value = { "/", "" }, method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE })
 	public Persons getAllPersons() {
 		return new Persons(persons);
 	}
